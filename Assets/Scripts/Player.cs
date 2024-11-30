@@ -21,7 +21,7 @@ public class Player : PoolObject
 
     private void Start()
     {
-        _curAttackPattern = _NormalAttack;
+        _curAttackPattern = _Power2Attack;
 
         _Attack().Forget();
     }
@@ -39,7 +39,7 @@ public class Player : PoolObject
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            _curAttackPattern = _AdvancedAttack;
+            _curAttackPattern = _Power3Attack;
     }
 
     private async UniTask _Attack()
@@ -52,25 +52,34 @@ public class Player : PoolObject
         }
     }
 
-    private void _NormalAttack()
+    private void _Power1Attack()
     {
         var bullet = ObjectPoolManager.Instance.Get<PlayerBulletA>();
         bullet.transform.position = transform.position;
         bullet.Fire(10f);
     }
 
-    private void _AdvancedAttack()
+    private void _Power2Attack()
     {
         var pos = transform.position;
-        var bullet1 = ObjectPoolManager.Instance.Get<PlayerBulletA>();
-        pos.x += 0.25f;
-        bullet1.transform.position = pos;
-        bullet1.Fire(10f);
+        var BulletA1 = ObjectPoolManager.Instance.Get<PlayerBulletA>();
+        pos.x += 0.3f;
+        BulletA1.transform.position = pos;
+        BulletA1.Fire(10f);
         
         pos = transform.position;
-        var bullet2 = ObjectPoolManager.Instance.Get<PlayerBulletA>();
-        pos.x -= 0.25f;
-        bullet2.transform.position = pos;
-        bullet2.Fire(10f);
+        var BulletA2 = ObjectPoolManager.Instance.Get<PlayerBulletA>();
+        pos.x -= 0.3f;
+        BulletA2.transform.position = pos;
+        BulletA2.Fire(10f);
+    }
+
+    private void _Power3Attack()
+    {
+        _Power2Attack();
+        
+        var BulletB = ObjectPoolManager.Instance.Get<PlayerBulletB>();
+        BulletB.transform.position = transform.position;
+        BulletB.Fire(10f);
     }
 }

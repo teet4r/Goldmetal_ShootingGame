@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PoolObject : MonoBehaviour
 {
+    public bool IsPooled => transform.parent == ObjectPoolManager.Instance.transform && !gameObject.activeInHierarchy;
     public new Transform transform => _transform;
     protected Transform _transform;
 
@@ -27,8 +28,11 @@ public class PoolObject : MonoBehaviour
             .AddTo(gameObject);
     }
 
-    protected virtual void Return()
+    public virtual void Return()
     {
+        if (IsPooled)
+            return;
+
         if (IsTokenCancellable)
         {
             _cancellationTokenSource.Cancel();
