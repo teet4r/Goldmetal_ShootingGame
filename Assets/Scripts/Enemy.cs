@@ -55,7 +55,7 @@ public class Enemy : PoolObject
 
     private async UniTask _ReturnSprite()
     {
-        await UniTask.DelayFrame(1, cancellationToken: CancellationTokenSource.Token);
+        await UniTask.Delay(100, cancellationToken: CancellationTokenSource.Token);
         _spriteRenderer.sprite = _originSprite;
     }
 }

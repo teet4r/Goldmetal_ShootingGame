@@ -1,5 +1,5 @@
 public enum SceneName
 {
-	SampleScene,
+	Ingame,
 	Empty,
 }
