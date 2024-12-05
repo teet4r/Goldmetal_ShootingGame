@@ -36,8 +36,9 @@ public class Enemy : PoolObject
         }
     }
 
-    public void Bind()
+    public virtual void Bind(Vector2 position)
     {
+        transform.position = position;
         _hp = _maxHp;
         _rigid.linearVelocity = _speed * Vector2.down;
         _spriteRenderer.sprite = _originSprite;

@@ -16,7 +16,20 @@ public class Ingame : SceneSingletonBehaviour<Ingame>
         {
             await UniTask.Delay(Random.Range(250, 2000), cancellationToken: destroyCancellationToken);
 
-
+            Enemy enemy = null;
+            switch (Random.Range(0, 3))
+            {
+                case 0:
+                    enemy = ObjectPoolManager.Instance.Get<EnemyA>();
+                    break;
+                case 1:
+                    enemy = ObjectPoolManager.Instance.Get<EnemyB>();
+                    break;
+                case 2:
+                    enemy = ObjectPoolManager.Instance.Get<EnemyC>();
+                    break;
+            }
+            enemy.Bind(_spawnPoints[Random.Range(0, _spawnPoints.Length)].position);
         }
     }
 }
