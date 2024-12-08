@@ -2,8 +2,17 @@ using UnityEngine;
 
 public class PlayerBullet : Bullet
 {
-    public virtual void Fire(float speed)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        rigid.AddForce(speed * Vector2.up, ForceMode2D.Impulse);
+        if (collision.CompareTag(Tag.Enemy))
+        {
+            if (!collision.TryGetComponent(out Enemy enemy))
+                return;
+
+            if (enemy.IsDead)
+                return;
+            enemy.GetDamage(Damage);
+            Return();
+        }
     }
 }

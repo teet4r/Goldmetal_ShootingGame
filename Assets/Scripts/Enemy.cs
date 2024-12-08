@@ -10,6 +10,10 @@ public class Enemy : PoolObject
     [Header("Variables")]
     [SerializeField] private int _maxHp;
     [SerializeField] private float _speed;
+    [Min(1)][SerializeField] private int _delayMsPerShot;
+
+    public bool IsDead => _hp <= 0;
+    protected virtual EnemyBullet bullet => ObjectPoolManager.Instance.Get<EnemyBulletA>();
 
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigid;
@@ -27,13 +31,6 @@ public class Enemy : PoolObject
     {
         if (collision.CompareTag(Tag.BulletBorder))
             Return();
-        else if (collision.CompareTag(Tag.PlayerBullet))
-        {
-            if (!collision.TryGetComponent(out PlayerBullet playerBullet))
-                return;
-            GetDamage(playerBullet.Damage);
-            playerBullet.Return();
-        }
     }
 
     public virtual void Bind(Vector2 position)
@@ -42,6 +39,18 @@ public class Enemy : PoolObject
         _hp = _maxHp;
         _rigid.linearVelocity = _speed * Vector2.down;
         _spriteRenderer.sprite = _originSprite;
+
+        _Attack().Forget();
+    }
+
+    private async UniTask _Attack()
+    {
+        while (!IsDead)
+        {
+            await UniTask.Delay(_delayMsPerShot, cancellationToken: CancellationTokenSource.Token);
+
+            bullet.Fire(transform.position);
+        }
     }
 
     public void GetDamage(int damage)
@@ -50,7 +59,7 @@ public class Enemy : PoolObject
         _spriteRenderer.sprite = _hitSprite;
         _ReturnSprite().Forget();
 
-        if (_hp <= 0)
+        if (IsDead)
             Return();
     }
 

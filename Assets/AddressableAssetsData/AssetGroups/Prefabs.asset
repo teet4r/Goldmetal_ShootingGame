@@ -20,6 +20,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 531529012c40d2d4281c3be6c4e55024
+    m_Address: EnemyBulletA
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 71c4f69fdc2a87c43978be93548b8948
+    m_Address: EnemyBulletB
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b9ff046bd59c8e24a9793c0eb406b81c
     m_Address: EnemyC
     m_ReadOnly: 0

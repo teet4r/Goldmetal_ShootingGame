@@ -186,3 +186,4 @@ MonoBehaviour:
   _hitSprite: {fileID: -7844560889915226194, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
   _maxHp: 15
   _speed: 10
+  _delayMsPerShot: 500

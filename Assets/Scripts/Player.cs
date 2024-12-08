@@ -39,7 +39,10 @@ public class Player : PoolObject
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
+        {
             _curAttackPattern = _Power3Attack;
+            _delayMsPerShot /= 2;
+        }
     }
 
     private async UniTask _Attack()
@@ -55,8 +58,7 @@ public class Player : PoolObject
     private void _Power1Attack()
     {
         var bullet = ObjectPoolManager.Instance.Get<PlayerBulletA>();
-        bullet.transform.position = transform.position;
-        bullet.Fire(10f);
+        bullet.Fire(transform.position);
     }
 
     private void _Power2Attack()
@@ -64,14 +66,12 @@ public class Player : PoolObject
         var pos = transform.position;
         var BulletA1 = ObjectPoolManager.Instance.Get<PlayerBulletA>();
         pos.x += 0.3f;
-        BulletA1.transform.position = pos;
-        BulletA1.Fire(10f);
+        BulletA1.Fire(pos);
         
         pos = transform.position;
         var BulletA2 = ObjectPoolManager.Instance.Get<PlayerBulletA>();
         pos.x -= 0.3f;
-        BulletA2.transform.position = pos;
-        BulletA2.Fire(10f);
+        BulletA2.Fire(pos);
     }
 
     private void _Power3Attack()
@@ -79,7 +79,6 @@ public class Player : PoolObject
         _Power2Attack();
         
         var BulletB = ObjectPoolManager.Instance.Get<PlayerBulletB>();
-        BulletB.transform.position = transform.position;
-        BulletB.Fire(10f);
+        BulletB.Fire(transform.position);
     }
 }

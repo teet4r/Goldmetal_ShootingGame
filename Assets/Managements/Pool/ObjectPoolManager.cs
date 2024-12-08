@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UniRx;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -27,7 +26,7 @@ public class ObjectPoolManager : SingletonBehaviour<ObjectPoolManager>
 
             if (_pool.Count == 0)
             {
-                var obj = Addressables.InstantiateAsync(_prefabName, Vector3.zero, Quaternion.identity, _parent).WaitForCompletion();
+                var obj = Addressables.InstantiateAsync(_prefabName, new Vector2(9999f, 9999f), Quaternion.identity, _parent).WaitForCompletion();
                 obj.TryGetComponent(out pObj);
                 return pObj;
             }
@@ -42,8 +41,6 @@ public class ObjectPoolManager : SingletonBehaviour<ObjectPoolManager>
 
         public void Return(PoolObject obj)
         {
-            obj.gameObject.SetActive(false);
-
             _pool.Add(obj);
         }
 

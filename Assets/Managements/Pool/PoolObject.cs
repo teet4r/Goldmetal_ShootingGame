@@ -1,14 +1,14 @@
+using System;
 using System.Threading;
 using UniRx;
 using UnityEngine;
 
 public class PoolObject : MonoBehaviour
 {
-    public bool IsPooled => transform.parent == ObjectPoolManager.Instance.transform && !gameObject.activeInHierarchy;
     public new Transform transform => _transform;
     protected Transform _transform;
 
-    protected bool IsTokenCancellable => !_cancellationTokenSource.IsNull() && !_cancellationTokenSource.IsCancellationRequested;
+    private bool IsTokenCancellable => !_cancellationTokenSource.IsNull() && !_cancellationTokenSource.IsCancellationRequested;
     protected CancellationTokenSource CancellationTokenSource
     {
         get
@@ -30,9 +30,10 @@ public class PoolObject : MonoBehaviour
 
     public virtual void Return()
     {
-        if (IsPooled)
+        if (!gameObject.activeSelf)
             return;
 
+        gameObject.SetActive(false);
         if (IsTokenCancellable)
         {
             _cancellationTokenSource.Cancel();

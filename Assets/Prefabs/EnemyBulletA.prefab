@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 7249458068838356198}
   - component: {fileID: 2564881366723812239}
   - component: {fileID: 4561217296144467421}
-  - component: {fileID: 3144607475667444606}
+  - component: {fileID: 317579626238494564}
   m_Layer: 0
-  m_Name: PlayerBulletA
-  m_TagString: PlayerBullet
+  m_Name: EnemyBulletA
+  m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -3853900315991760761, guid: 5547e92425a5b584ba72bba3566474f0, type: 3}
+  m_Sprite: {fileID: -7779215486825634471, guid: 5547e92425a5b584ba72bba3566474f0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -128,13 +128,13 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16666667, y: 0.29166666}
+    oldSize: {x: 0.25, y: 0.33333334}
     newSize: {x: 0.16666667, y: 0.29166666}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.16666667, y: 0.29166666}
+  m_Size: {x: 0.25, y: 0.33333334}
   m_EdgeRadius: 0
 --- !u!50 &4561217296144467421
 Rigidbody2D:
@@ -163,7 +163,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &3144607475667444606
+--- !u!114 &317579626238494564
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 322194583194733669}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b86c796adf46a449bf653a3350ec4b1, type: 3}
+  m_Script: {fileID: 11500000, guid: a1ba4ad1a26d2f14ab33172c9ba14716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
