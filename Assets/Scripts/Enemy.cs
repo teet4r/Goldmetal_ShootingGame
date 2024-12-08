@@ -55,6 +55,9 @@ public class Enemy : PoolObject
 
     public void GetDamage(int damage)
     {
+        if (IsDead)
+            return;
+
         _hp -= damage;
         _spriteRenderer.sprite = _hitSprite;
         _ReturnSprite().Forget();
