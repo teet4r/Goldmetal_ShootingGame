@@ -6,7 +6,7 @@ using UnityEngine;
 public class PoolObject : MonoBehaviour
 {
     public new Transform transform => _transform;
-    protected Transform _transform;
+    private Transform _transform;
 
     private bool IsTokenCancellable => !_cancellationTokenSource.IsNull() && !_cancellationTokenSource.IsCancellationRequested;
     protected CancellationTokenSource CancellationTokenSource
