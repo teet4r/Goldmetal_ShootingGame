@@ -8,17 +8,17 @@ public class PoolObject : MonoBehaviour
     public new Transform transform => _transform;
     private Transform _transform;
 
-    private bool IsTokenCancellable => !_cancellationTokenSource.IsNull() && !_cancellationTokenSource.IsCancellationRequested;
-    protected CancellationTokenSource CancellationTokenSource
+    private bool IsTokenCancellable => !_returnCancellationToken.IsNull() && !_returnCancellationToken.IsCancellationRequested;
+    protected CancellationTokenSource returnCancellationTokenSource
     {
         get
         {
             if (!IsTokenCancellable)
-                _cancellationTokenSource = new CancellationTokenSource();
-            return _cancellationTokenSource;
+                _returnCancellationToken = new CancellationTokenSource();
+            return _returnCancellationToken;
         }
     }
-    private CancellationTokenSource _cancellationTokenSource;
+    private CancellationTokenSource _returnCancellationToken;
 
     protected virtual void Awake()
     {
@@ -36,9 +36,9 @@ public class PoolObject : MonoBehaviour
         gameObject.SetActive(false);
         if (IsTokenCancellable)
         {
-            _cancellationTokenSource.Cancel();
-            _cancellationTokenSource.Dispose();
-            _cancellationTokenSource = null;
+            _returnCancellationToken.Cancel();
+            _returnCancellationToken.Dispose();
+            _returnCancellationToken = null;
         }
         ObjectPoolManager.Instance.Return(this);
     }

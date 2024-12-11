@@ -47,7 +47,7 @@ public class Enemy : PoolObject
     {
         while (!IsDead)
         {
-            await UniTask.Delay(_delayMsPerShot, cancellationToken: CancellationTokenSource.Token);
+            await UniTask.Delay(_delayMsPerShot, cancellationToken: returnCancellationTokenSource.Token);
 
             bullet.Fire(transform.position);
         }
@@ -68,7 +68,7 @@ public class Enemy : PoolObject
 
     private async UniTask _ReturnSprite()
     {
-        await UniTask.Delay(100, cancellationToken: CancellationTokenSource.Token);
+        await UniTask.Delay(100, cancellationToken: returnCancellationTokenSource.Token);
         _spriteRenderer.sprite = _originSprite;
     }
 }

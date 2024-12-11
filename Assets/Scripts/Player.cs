@@ -51,7 +51,7 @@ public class Player : PoolObject
         {
             _curAttackPattern();
 
-            await UniTask.Delay(_delayMsPerShot, cancellationToken: CancellationTokenSource.Token);
+            await UniTask.Delay(_delayMsPerShot, cancellationToken: returnCancellationTokenSource.Token);
         }
     }
 
