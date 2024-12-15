@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class Enemy : PoolObject
+public class Enemy : PoolObject, IDamageable, IAttackable
 {
     [Header("References")]
     [SerializeField] private Sprite _originSprite;
@@ -12,12 +12,18 @@ public class Enemy : PoolObject
     [SerializeField] private float _speed;
     [Min(1)][SerializeField] private int _delayMsPerShot;
 
-    public bool IsDead => _hp <= 0;
+    public bool IsDead => CurHp <= 0;
+    public int MaxHp => _maxHp;
+    public int CurHp => _curHp;
+    public bool IsAttacking => _isAttacking;
+
+    private int _curHp;
+    private bool _isAttacking;
+
     protected virtual EnemyBullet bullet => ObjectPoolManager.Instance.Get<EnemyBulletA>();
 
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigid;
-    private int _hp;
 
     protected override void Awake()
     {
@@ -33,19 +39,35 @@ public class Enemy : PoolObject
             Return();
     }
 
-    public virtual void Bind(Vector2 position)
+    public void Bind(Vector2 position)
     {
         transform.position = position;
-        _hp = _maxHp;
+        _curHp = _maxHp;
+        _isAttacking = false;
         _rigid.linearVelocity = _speed * Vector2.down;
         _spriteRenderer.sprite = _originSprite;
-
-        _Attack().Forget();
     }
 
-    private async UniTask _Attack()
+    public void StartAttack()
     {
-        while (!IsDead)
+        if (IsDead || IsAttacking)
+            return;
+
+        _isAttacking = true;
+        _AttackRoutine().Forget();
+    }
+
+    public void StopAttack()
+    {
+        if (IsDead || !IsAttacking)
+            return;
+
+        _isAttacking = false;
+    }
+
+    private async UniTask _AttackRoutine()
+    {
+        while (!returnCancellationTokenSource.IsCancellationRequested && !IsDead && IsAttacking)
         {
             await UniTask.Delay(_delayMsPerShot, cancellationToken: returnCancellationTokenSource.Token);
 
@@ -53,12 +75,12 @@ public class Enemy : PoolObject
         }
     }
 
-    public void GetDamage(int damage)
+    public virtual void GetDamage(int damage)
     {
         if (IsDead)
             return;
 
-        _hp -= damage;
+        _curHp -= damage;
         _spriteRenderer.sprite = _hitSprite;
         _ReturnSprite().Forget();
 

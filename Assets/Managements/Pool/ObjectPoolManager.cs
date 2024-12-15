@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using UniRx;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -63,7 +61,6 @@ public class ObjectPoolManager : SingletonBehaviour<ObjectPoolManager>
         base.Awake();
 
         _transform = gameObject.transform;
-        
     }
 
     public T Get<T>() where T : PoolObject

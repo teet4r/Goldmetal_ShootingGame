@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using UniRx;
 using UnityEngine;
@@ -28,7 +27,7 @@ public class PoolObject : MonoBehaviour
             .AddTo(gameObject);
     }
 
-    public virtual void Return()
+    public void Return()
     {
         if (!gameObject.activeSelf)
             return;

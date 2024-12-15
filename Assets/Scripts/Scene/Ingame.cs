@@ -30,6 +30,7 @@ public class Ingame : SceneSingletonBehaviour<Ingame>
                     break;
             }
             enemy.Bind(_spawnPoints[Random.Range(0, _spawnPoints.Length)].position);
+            enemy.StartAttack();
         }
     }
 }

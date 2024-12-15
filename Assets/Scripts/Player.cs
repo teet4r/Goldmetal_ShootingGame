@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
 
-public class Player : PoolObject
+public class Player : PoolObject, IAttackable
 {
     private const string _HORIZONTAL = "Horizontal";
     private const string _VERTICAL = "Vertical";
@@ -19,11 +19,15 @@ public class Player : PoolObject
     private Vector2 _dir = new();
     private Action _curAttackPattern;
 
-    private void Start()
+    public bool IsAttacking => _isAttacking;
+    private bool _isAttacking;
+
+    private void Start() // юс╫ц Bind
     {
+        _isAttacking = false;
         _curAttackPattern = _Power2Attack;
 
-        _Attack().Forget();
+        StartAttack();
     }
 
     private void FixedUpdate()
@@ -45,9 +49,26 @@ public class Player : PoolObject
         }
     }
 
-    private async UniTask _Attack()
+    public void StartAttack()
     {
-        while (true)
+        if (IsAttacking)
+            return;
+
+        _isAttacking = true;
+        _AttackRoutine().Forget();
+    }
+
+    public void StopAttack()
+    {
+        if (!IsAttacking)
+            return;
+
+        _isAttacking = false;
+    }
+
+    private async UniTask _AttackRoutine()
+    {
+        while (IsAttacking)
         {
             _curAttackPattern();
 
